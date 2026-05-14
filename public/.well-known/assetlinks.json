@@ -1,0 +1,10 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.duotech.hocvibecode",
+    "sha256_cert_fingerprints": [
+      "90:A4:BF:B2:E2:93:F5:D7:B9:3B:3B:98:F9:F0:56:6C:C2:F8:13:46:C9:0C:29:EB:B5:A9:3E:7D:ED:86:0F:E5"
+    ]
+  }
+}]
