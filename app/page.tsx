@@ -166,9 +166,9 @@ export default function Home() {
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </span>
             </Link>
-            <Link href="/courses#free" className="group flex items-center gap-2 justify-center px-8 py-4 rounded-2xl text-base font-bold glass neon-border text-white hover:bg-orange-50 transition-all">
+            <Link href="/free" className="group flex items-center gap-2 justify-center px-8 py-4 rounded-2xl text-base font-bold glass neon-border text-white hover:bg-orange-50 transition-all">
               <Play size={18} className="text-purple-400" />
-              Tài nguyên miễn phí
+              Học miễn phí ngay
             </Link>
           </div>
 
@@ -318,6 +318,65 @@ export default function Home() {
             <Link href="/courses" className="group inline-flex items-center gap-2 btn-brand px-8 py-3.5 rounded-2xl font-bold">
               <span className="relative z-10 flex items-center gap-2">
                 Xem tất cả khóa học
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FREE LESSONS ── */}
+      <section className="py-24 relative" style={{ background: 'rgba(249,115,22,0.04)', borderTop: '1px solid rgba(249,115,22,0.12)' }}>
+        <div className="orb w-80 h-80 top-0 left-0" style={{ background: 'rgba(249,115,22,0.06)' }} />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-12">
+            <div className="section-badge mb-4 mx-auto"><Play size={13} /> Học thử miễn phí</div>
+            <h2 className="text-4xl lg:text-5xl font-black text-white mb-4">
+              3 buổi học <span className="gradient-text">hoàn toàn miễn phí</span>
+            </h2>
+            <p className="text-gray-500 text-lg max-w-2xl mx-auto">
+              Xem ngay 3 buổi học Vibe Coding được ghi lại — không cần đăng ký, không cần thẻ tín dụng.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            {[
+              { id: 1, videoId: 'm3sssbK3ytM', title: 'Buổi 1 — Giới thiệu Vibe Coding & Công cụ AI', duration: '~60 phút' },
+              { id: 2, videoId: 'iVmGVXCe_qQ', title: 'Buổi 2 — Xây dựng dự án thực tế với AI', duration: '~60 phút' },
+              { id: 3, videoId: 'WAe3bxp8M6Y', title: 'Buổi 3 — Nâng cao & Chia sẻ kinh nghiệm', duration: '~60 phút' },
+            ].map((v) => (
+              <Link href="/free" key={v.id} className="group glass glass-hover rounded-2xl overflow-hidden flex flex-col">
+                <div className="relative overflow-hidden" style={{ paddingTop: '56.25%' }}>
+                  <img
+                    src={`https://img.youtube.com/vi/${v.videoId}/hqdefault.jpg`}
+                    alt={v.title}
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center" style={{ background: 'rgba(0,0,0,0.35)' }}>
+                    <div className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform"
+                      style={{ background: 'rgba(249,115,22,0.9)' }}>
+                      <Play size={22} color="white" />
+                    </div>
+                  </div>
+                  <span className="absolute top-3 left-3 px-2.5 py-1 rounded-lg text-xs font-black text-white" style={{ background: 'linear-gradient(135deg,#F97316,#F59E0B)' }}>
+                    MIỄN PHÍ
+                  </span>
+                  <span className="absolute bottom-3 right-3 px-2 py-1 rounded-lg text-xs font-semibold text-white" style={{ background: 'rgba(0,0,0,0.7)' }}>
+                    {v.duration}
+                  </span>
+                </div>
+                <div className="p-4">
+                  <div className="text-xs text-orange-400 font-bold mb-1">Buổi {v.id}</div>
+                  <h3 className="font-bold text-slate-800 text-sm leading-snug group-hover:text-purple-300 transition-colors">{v.title}</h3>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <Link href="/free" className="group inline-flex items-center gap-2 btn-brand px-8 py-3.5 rounded-2xl font-bold">
+              <span className="relative z-10 flex items-center gap-2">
+                Xem tất cả video miễn phí
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </span>
             </Link>

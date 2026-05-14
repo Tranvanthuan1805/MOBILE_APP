@@ -7,6 +7,7 @@ const navLinks = [
   { label: 'Trang chủ', href: '/' },
   { label: 'Giới thiệu', href: '/about' },
   { label: 'Khóa học', href: '/courses' },
+  { label: 'Học miễn phí', href: '/free', badge: 'FREE' },
   { label: 'Sản phẩm', href: '/products' },
   { label: 'Thiết kế Web', href: '/design' },
   { label: 'Blog AI', href: '/blog' },
@@ -66,8 +67,13 @@ export default function Navbar() {
           <nav className="hidden lg:flex items-center gap-1">
             {navLinks.map(link => (
               <Link key={link.href} href={link.href}
-                className="nav-link px-3 py-2 text-sm font-medium text-slate-600 hover:text-orange-600 rounded-lg hover:bg-orange-50 transition-all">
+                className="nav-link px-3 py-2 text-sm font-medium text-slate-600 hover:text-orange-600 rounded-lg hover:bg-orange-50 transition-all flex items-center gap-1.5">
                 {link.label}
+                {'badge' in link && link.badge && (
+                  <span className="text-[9px] font-black px-1.5 py-0.5 rounded-md text-white leading-none" style={{ background: 'linear-gradient(135deg,#F97316,#F59E0B)' }}>
+                    {link.badge}
+                  </span>
+                )}
               </Link>
             ))}
           </nav>
@@ -123,9 +129,14 @@ export default function Navbar() {
           <div className="lg:hidden py-4 border-t border-orange-100">
             {navLinks.map(link => (
               <Link key={link.href} href={link.href}
-                className="block px-4 py-3 text-slate-600 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-all font-medium"
+                className="flex items-center gap-2 px-4 py-3 text-slate-600 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-all font-medium"
                 onClick={() => setOpen(false)}>
                 {link.label}
+                {'badge' in link && link.badge && (
+                  <span className="text-[9px] font-black px-1.5 py-0.5 rounded-md text-white leading-none" style={{ background: 'linear-gradient(135deg,#F97316,#F59E0B)' }}>
+                    {link.badge}
+                  </span>
+                )}
               </Link>
             ))}
             <div className="mt-3 flex gap-2 px-2">
