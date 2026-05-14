@@ -2,10 +2,12 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'VibeCode – Nền tảng Lập trình × AI #1 Việt Nam',
+  title: 'HocVibeCode – Nền tảng Lập trình × AI #1 Việt Nam',
   description: 'Học lập trình, xây dựng website, tạo ứng dụng chuyên nghiệp với AI. Nền tảng giáo dục lập trình hàng đầu Việt Nam.',
   keywords: 'vibecode, học lập trình, AI, website, khóa học lập trình, vietnam',
-  icons: { icon: '/favicon.ico' },
+  icons: { icon: '/favicon.ico', apple: '/icons/apple-touch-icon.png' },
+  manifest: '/manifest.json',
+  themeColor: '#7C3AED',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
