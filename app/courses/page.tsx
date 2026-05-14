@@ -1,9 +1,27 @@
+import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import ChatBot from '@/components/ChatBot'
 import Link from 'next/link'
 import { BookOpen, Clock, Users, Star, Filter, Search, Play } from 'lucide-react'
 import { COURSES } from './data'
+
+export const metadata: Metadata = {
+  title: 'Khóa học Lập trình AI & Vibe Coding | VibeCode',
+  description: 'Tất cả khóa học lập trình AI tại VibeCode: Tạo game HTML với AI, Plugin WordPress, Lập trình Web Full-stack, Extension Chrome, Chatbot Python GPT. Từ 299,000đ — học 1 lần dùng mãi mãi.',
+  keywords: [
+    'khóa học lập trình AI', 'học lập trình AI online', 'vibe coding khóa học',
+    'khóa học tạo website AI', 'học tạo plugin WordPress AI', 'khóa học chatbot AI Python',
+    'lập trình web với AI Việt Nam', 'khóa học extension Chrome', 'học game dev AI',
+  ],
+  alternates: { canonical: 'https://hocvibecode.vercel.app/courses' },
+  openGraph: {
+    title: 'Khóa học Lập trình AI & Vibe Coding | VibeCode',
+    description: '6+ khóa học lập trình AI thực tế: Web, WordPress, Game, Chatbot, Extension Chrome. Từ 299,000đ, học trọn đời.',
+    url: 'https://hocvibecode.vercel.app/courses',
+    type: 'website',
+  },
+}
 
 const CATS = ['Tất cả', 'WordPress', 'Full-stack', 'Game Dev', 'Extension', 'AI/ML']
 

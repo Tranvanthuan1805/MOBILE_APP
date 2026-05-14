@@ -1,8 +1,26 @@
+import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import ChatBot from '@/components/ChatBot'
 import Link from 'next/link'
 import { Play, BookOpen, Users, Clock, ChevronRight, Star, Gift } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'Học Vibe Coding Miễn Phí — 3 Buổi Trực Tiếp | VibeCode',
+  description: 'Xem miễn phí 3 buổi học Vibe Coding được ghi lại: Giới thiệu AI tools, Xây dựng dự án thực tế, Kỹ thuật nâng cao. Không cần đăng ký, xem ngay tại VibeCode.',
+  keywords: [
+    'học vibe coding miễn phí', 'vibe coding free', 'xem học lập trình AI miễn phí',
+    'video học lập trình AI', 'vibe coding youtube', 'học AI coding không cần kinh nghiệm',
+    'buổi học vibe coding', 'lập trình AI cho người mới',
+  ],
+  alternates: { canonical: 'https://hocvibecode.vercel.app/free' },
+  openGraph: {
+    title: 'Học Vibe Coding Miễn Phí — 3 Buổi Trực Tiếp | VibeCode',
+    description: 'Xem miễn phí 3 buổi học Vibe Coding: AI tools, dự án thực tế, kỹ thuật nâng cao. Không cần đăng ký!',
+    url: 'https://hocvibecode.vercel.app/free',
+    type: 'website',
+  },
+}
 
 const FREE_LESSONS = [
   {

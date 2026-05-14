@@ -10,8 +10,32 @@ import {
 } from 'lucide-react'
 import CopyButton from './CopyButton'
 
+const BASE = 'https://hocvibecode.vercel.app'
+
 export function generateStaticParams() {
   return COURSES.map((c) => ({ slug: c.slug }))
+}
+
+export function generateMetadata({ params }: { params: { slug: string } }) {
+  const course = getCourseBySlug(params.slug)
+  if (!course) return {}
+  const fmt = (n: number) => n.toLocaleString('vi-VN') + 'đ'
+  return {
+    title: `${course.title} — Khóa học Lập trình AI | VibeCode`,
+    description: `${course.tagline} Học ${course.title} bằng AI tại VibeCode. ${course.lessons} bài học · ${course.hours} giờ · Chỉ ${fmt(course.price)}. Truy cập trọn đời, hỗ trợ 1-1.`,
+    keywords: [
+      course.title, `học ${course.title}`, `khóa học ${course.cat}`,
+      'vibe coding', 'lập trình AI', `${course.cat} với AI`,
+      'khóa học lập trình Việt Nam', 'hocvibecode',
+    ],
+    alternates: { canonical: `${BASE}/courses/${course.slug}` },
+    openGraph: {
+      title: `${course.title} | VibeCode`,
+      description: course.tagline + ' ' + course.desc,
+      url: `${BASE}/courses/${course.slug}`,
+      type: 'website',
+    },
+  }
 }
 
 const fmt = (n: number) => n.toLocaleString('vi-VN') + '₫'
@@ -28,8 +52,56 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
 
   const discount = Math.round((1 - course.price / course.oldPrice) * 100)
 
+  const courseSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: course.title,
+    description: course.longDesc,
+    url: `${BASE}/courses/${course.slug}`,
+    image: `${BASE}/icons/icon-512.png`,
+    provider: {
+      '@type': 'Organization',
+      name: 'VibeCode',
+      url: BASE,
+    },
+    offers: {
+      '@type': 'Offer',
+      price: course.price,
+      priceCurrency: 'VND',
+      availability: 'https://schema.org/InStock',
+      url: `${BASE}/courses/${course.slug}`,
+    },
+    hasCourseInstance: {
+      '@type': 'CourseInstance',
+      courseMode: 'online',
+      inLanguage: 'vi',
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: course.rating,
+      reviewCount: course.students,
+      bestRating: 5,
+      worstRating: 1,
+    },
+    educationalLevel: course.level,
+    teaches: course.outcomes,
+    coursePrerequisites: course.requirements,
+  }
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: BASE },
+      { '@type': 'ListItem', position: 2, name: 'Khóa học', item: `${BASE}/courses` },
+      { '@type': 'ListItem', position: 3, name: course.title, item: `${BASE}/courses/${course.slug}` },
+    ],
+  }
+
   return (
     <div className="min-h-screen" style={{ background: '#ffffff' }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <Navbar />
 
       {/* ── HERO ── */}

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import ChatBot from '@/components/ChatBot'
@@ -9,6 +10,23 @@ import {
   Bot, Rocket, Brain, Sparkles, MonitorPlay, Database,
   MessageSquare, ShoppingBag
 } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'VibeCode — Học Vibe Coding & Lập trình AI #1 Việt Nam',
+  description: 'Vibe Coding là gì? Học lập trình kết hợp AI (Claude, ChatGPT, Cursor) — cách code nhanh nhất 2025-2026. 6+ khóa học thực tế, 3 buổi miễn phí, cộng đồng 1,200+ dev Việt Nam.',
+  keywords: [
+    'vibe coding', 'vibecoding', 'học vibe coding', 'vibe coding là gì',
+    'lập trình AI Việt Nam', 'học lập trình AI', 'lập trình với Claude AI',
+    'học code với AI', 'tạo web bằng AI', 'khóa học lập trình 2025', 'khóa học lập trình 2026',
+  ],
+  alternates: { canonical: 'https://hocvibecode.vercel.app' },
+  openGraph: {
+    title: 'VibeCode — Học Vibe Coding & Lập trình AI #1 Việt Nam',
+    description: 'Học Vibe Coding — phong cách lập trình kết hợp AI đang thịnh hành nhất. 3 buổi học miễn phí, không cần kinh nghiệm.',
+    url: 'https://hocvibecode.vercel.app',
+    type: 'website',
+  },
+}
 
 /* ── DATA ── */
 const COURSES = [
