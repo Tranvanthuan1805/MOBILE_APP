@@ -2,13 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Code2, Eye, EyeOff, Loader2, Lock, Mail, Sparkles } from 'lucide-react'
-
-const DEMO_ACCOUNTS = [
-  { email: 'admin@vibecode.vn', password: 'admin123', role: 'admin', name: 'Admin VibeCode' },
-  { email: 'collab@vibecode.vn', password: 'collab123', role: 'collaborator', name: 'Nguyễn Cộng Tác' },
-  { email: 'user@vibecode.vn', password: 'user123', role: 'user', name: 'Trần Học Viên' },
-]
+import { Code2, Eye, EyeOff, Loader2, Lock, Mail } from 'lucide-react'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -22,20 +16,21 @@ export default function LoginPage() {
     e.preventDefault()
     setLoading(true)
     setError('')
-    await new Promise(r => setTimeout(r, 800))
-    const acc = DEMO_ACCOUNTS.find(a => a.email === email && a.password === password)
-    if (!acc) {
-      setError('Email hoặc mật khẩu không đúng. Hãy thử tài khoản demo bên dưới.')
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      })
+      const data = await res.json()
+      if (!res.ok) { setError(data.error); return }
+      localStorage.setItem('vibecode_user', JSON.stringify(data.user))
+      router.push('/dashboard')
+    } catch {
+      setError('Lỗi kết nối. Thử lại sau.')
+    } finally {
       setLoading(false)
-      return
     }
-    localStorage.setItem('vibecode_user', JSON.stringify({ name: acc.name, role: acc.role, email: acc.email }))
-    router.push('/dashboard')
-  }
-
-  const loginDemo = (acc: typeof DEMO_ACCOUNTS[0]) => {
-    setEmail(acc.email)
-    setPassword(acc.password)
   }
 
   return (
@@ -56,31 +51,6 @@ export default function LoginPage() {
             </Link>
             <h1 className="text-2xl font-black text-white mt-4 mb-1">Đăng nhập</h1>
             <p className="text-gray-500 text-sm">Chào mừng bạn quay trở lại! 👋</p>
-          </div>
-
-          {/* Demo accounts */}
-          <div className="mb-6 p-4 rounded-2xl" style={{ background: 'rgba(249,115,22,0.08)', border: '1px solid rgba(249,115,22,0.2)' }}>
-            <div className="flex items-center gap-2 mb-3">
-              <Sparkles size={14} className="text-yellow-400" />
-              <span className="text-xs font-bold text-gray-600 uppercase tracking-wider">Tài khoản Demo</span>
-            </div>
-            <div className="space-y-2">
-              {DEMO_ACCOUNTS.map(acc => {
-                const colors: Record<string, string> = { admin: 'badge-role-admin', collaborator: 'badge-role-colla', user: 'badge-role-user' }
-                const labels: Record<string, string> = { admin: 'Admin', collaborator: 'CTV', user: 'User' }
-                return (
-                  <button key={acc.email} onClick={() => loginDemo(acc)}
-                    className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs text-gray-600 hover:bg-orange-50 transition-all group"
-                  >
-                    <span className="font-mono text-gray-500 group-hover:text-gray-200 transition-colors">{acc.email}</span>
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-gray-500">{acc.password}</span>
-                      <span className={`tag ${colors[acc.role]}`}>{labels[acc.role]}</span>
-                    </div>
-                  </button>
-                )
-              })}
-            </div>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-4">

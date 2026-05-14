@@ -21,9 +21,21 @@ export default function RegisterPage() {
     if (form.password !== form.confirm) { setError('Mật khẩu xác nhận không khớp.'); return }
     if (form.password.length < 6) { setError('Mật khẩu phải có ít nhất 6 ký tự.'); return }
     setLoading(true); setError('')
-    await new Promise(r => setTimeout(r, 1000))
-    localStorage.setItem('vibecode_user', JSON.stringify({ name: form.name, role: 'user', email: form.email }))
-    router.push('/dashboard')
+    try {
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: form.name, email: form.email, password: form.password }),
+      })
+      const data = await res.json()
+      if (!res.ok) { setError(data.error); return }
+      localStorage.setItem('vibecode_user', JSON.stringify(data.user))
+      router.push('/dashboard')
+    } catch {
+      setError('Lỗi kết nối. Thử lại sau.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   const PERKS = ['Truy cập 50+ bài học miễn phí', 'Tham gia cộng đồng 1,200+ dev', 'Nhận newsletter AI hàng tuần', 'Dashboard học tập cá nhân']
