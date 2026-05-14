@@ -6,8 +6,9 @@ import Link from 'next/link'
 import { COURSES, getCourseBySlug } from '../data'
 import {
   BookOpen, Clock, Users, Star, CheckCircle, ChevronRight,
-  Copy, Shield, Award, Play, AlertCircle, ArrowLeft,
+  Shield, Award, Play, AlertCircle, ArrowLeft,
 } from 'lucide-react'
+import CopyButton from './CopyButton'
 
 export function generateStaticParams() {
   return COURSES.map((c) => ({ slug: c.slug }))
@@ -169,12 +170,7 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
                       <span className="text-gray-500">Số tài khoản</span>
                       <div className="flex items-center gap-1.5">
                         <span className="font-black text-orange-500 text-base tracking-wide">{BANK.account}</span>
-                        <button
-                          onClick={() => navigator.clipboard?.writeText(BANK.account)}
-                          className="text-gray-400 hover:text-orange-500 transition-colors"
-                          title="Copy số tài khoản">
-                          <Copy size={13} />
-                        </button>
+                        <CopyButton text={BANK.account} />
                       </div>
                     </div>
                     <div className="flex justify-between items-center">
