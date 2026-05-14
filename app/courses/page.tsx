@@ -2,16 +2,8 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import ChatBot from '@/components/ChatBot'
 import Link from 'next/link'
-import { BookOpen, Clock, Users, Star, ChevronRight, Filter, Search, Play } from 'lucide-react'
-
-const COURSES = [
-  { title: 'Tạo trò chơi HTML với AI', desc: 'Học cách sử dụng AI để tạo ra các trò chơi HTML thú vị từ đầu không cần kinh nghiệm.', lessons: 2, hours: 3, level: 'Cơ bản', price: 299000, oldPrice: 599000, rating: 4.9, students: 320, icon: '🎮', tag: 'tag-beginner', cat: 'Game Dev' },
-  { title: 'Lập trình Plugin WordPress với AI', desc: 'Phát triển plugin WordPress chuyên nghiệp, tích hợp AI để tự động hóa các tác vụ.', lessons: 3, hours: 6, level: 'Nâng cao', price: 999000, oldPrice: 1999000, rating: 4.8, students: 185, icon: '🔌', tag: 'tag-advanced', cat: 'WordPress', badge: 'BESTSELLER' },
-  { title: 'Lập trình Web chuyên sâu với AI', desc: 'Toàn diện từ HTML/CSS đến React, NodeJS. Xây dựng ứng dụng thực tế với AI cực kỳ mạnh mẽ.', lessons: 12, hours: 24, level: 'Nâng cao', price: 3990000, oldPrice: 7990000, rating: 5.0, students: 92, icon: '🌐', tag: 'tag-advanced', cat: 'Full-stack', badge: 'HOT' },
-  { title: 'Tạo Website WordPress với AI từ A-Z', desc: 'Học xây dựng website hoàn chỉnh bằng AI, từ thiết kế đến deploy. Dành cho người mới.', lessons: 3, hours: 6, level: 'Cơ bản', price: 999000, oldPrice: 1499000, rating: 4.7, students: 410, icon: '💻', tag: 'tag-beginner', cat: 'WordPress' },
-  { title: 'Tạo Extensions Chrome với AI', desc: 'Xây dựng tiện ích mở rộng Chrome thực tế, tích hợp AI để nâng cao trải nghiệm người dùng.', lessons: 2, hours: 4, level: 'Trung cấp', price: 799000, oldPrice: 1199000, rating: 4.8, students: 230, icon: '🧩', tag: 'tag-intermediate', cat: 'Extension' },
-  { title: 'Chatbot AI với Python & GPT', desc: 'Xây dựng chatbot thông minh từ đầu bằng Python kết hợp API OpenAI. Deploy lên production.', lessons: 5, hours: 10, level: 'Trung cấp', price: 1499000, oldPrice: 2499000, rating: 4.9, students: 167, icon: '🤖', tag: 'tag-intermediate', cat: 'AI/ML', badge: 'MỚI' },
-]
+import { BookOpen, Clock, Users, Star, Filter, Search, Play } from 'lucide-react'
+import { COURSES } from './data'
 
 const CATS = ['Tất cả', 'WordPress', 'Full-stack', 'Game Dev', 'Extension', 'AI/ML']
 
@@ -34,8 +26,6 @@ export default function CoursesPage() {
           <p className="text-gray-500 text-xl max-w-2xl mx-auto mb-10">
             Từ cơ bản đến nâng cao, học lập trình bằng AI để tăng tốc độ và chất lượng code.
           </p>
-
-          {/* Search */}
           <div className="relative max-w-xl mx-auto">
             <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
             <input placeholder="Tìm kiếm khóa học..." className="input-brand pl-11 pr-4 py-4 text-base rounded-2xl w-full" />
@@ -53,8 +43,7 @@ export default function CoursesPage() {
             <span className="flex items-center gap-1.5 text-sm text-gray-500 font-medium"><Filter size={14} /> Lọc:</span>
             {CATS.map(cat => (
               <button key={cat}
-                className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${cat === 'Tất cả' ? 'btn-brand' : 'glass glass-hover text-gray-600'}`}
-              >
+                className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${cat === 'Tất cả' ? 'btn-brand' : 'glass glass-hover text-gray-600'}`}>
                 {cat === 'Tất cả' ? <span className="relative z-10">{cat}</span> : cat}
               </button>
             ))}
@@ -69,7 +58,7 @@ export default function CoursesPage() {
             <span>Hiển thị <strong className="text-slate-800">{COURSES.length}</strong> khóa học</span>
             <span className="flex items-center gap-2"><Users size={14} /> Tổng <strong className="text-slate-800">1,200+</strong> học viên</span>
             <span className="flex items-center gap-2"><Star size={14} className="text-yellow-400" /> Đánh giá TB <strong className="text-slate-800">4.85/5</strong></span>
-            <span className="flex items-center gap-2"><Play size={14} /> <strong className="text-slate-800">53+ giờ</strong> video</span>
+            <span className="flex items-center gap-2"><Play size={14} /> <strong className="text-slate-800">83+ giờ</strong> video</span>
           </div>
         </div>
       </section>
@@ -79,21 +68,43 @@ export default function CoursesPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {COURSES.map(c => (
-              <div key={c.title} className="group glass glass-hover rounded-2xl overflow-hidden flex flex-col">
-                {/* Thumbnail */}
-                <div className="relative p-8 flex items-center justify-center"
-                  style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.15), rgba(245,158,11,0.15))', minHeight: 160 }}>
+              <Link href={`/courses/${c.slug}`} key={c.slug}
+                className="group glass glass-hover rounded-2xl overflow-hidden flex flex-col cursor-pointer">
+
+                {/* Thumbnail — generated gradient image */}
+                <div className="relative overflow-hidden" style={{ paddingTop: '56.25%' }}>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center"
+                    style={{ background: `linear-gradient(135deg, ${c.colors[0]}, ${c.colors[1]})` }}>
+                    {/* Grid pattern overlay */}
+                    <div className="absolute inset-0 opacity-10"
+                      style={{
+                        backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
+                        backgroundSize: '24px 24px',
+                      }} />
+                    {/* Shine */}
+                    <div className="absolute inset-0"
+                      style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%)' }} />
+                    {/* Icon */}
+                    <span className="text-6xl group-hover:scale-110 transition-transform duration-300 relative z-10 drop-shadow-lg">
+                      {c.icon}
+                    </span>
+                    {/* VibeCode label */}
+                    <span className="absolute bottom-3 right-3 text-[10px] font-black text-white/70 tracking-widest">VIBECODE</span>
+                  </div>
+
+                  {/* Badge */}
                   {c.badge && (
-                    <span className="absolute top-3 left-3 px-2.5 py-1 rounded-lg text-xs font-black text-white"
+                    <span className="absolute top-3 left-3 px-2.5 py-1 rounded-lg text-xs font-black text-white z-20"
                       style={{ background: c.badge === 'HOT' ? 'linear-gradient(135deg,#ef4444,#f97316)' : c.badge === 'MỚI' ? 'linear-gradient(135deg,#F97316,#F59E0B)' : 'linear-gradient(135deg,#f59e0b,#d97706)' }}>
                       {c.badge}
                     </span>
                   )}
-                  <span className="text-6xl group-hover:scale-110 transition-transform">{c.icon}</span>
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                    style={{ background: 'rgba(0,0,0,0.3)' }}>
-                    <div className="w-14 h-14 rounded-full flex items-center justify-center" style={{ background: 'rgba(249,115,22,0.9)' }}>
-                      <Play size={20} color="white" />
+
+                  {/* Hover play overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10"
+                    style={{ background: 'rgba(0,0,0,0.25)' }}>
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center bg-white/90 shadow-xl">
+                      <Play size={18} className="text-orange-500 ml-0.5" />
                     </div>
                   </div>
                 </div>
@@ -101,10 +112,12 @@ export default function CoursesPage() {
                 {/* Body */}
                 <div className="p-5 flex flex-col flex-1">
                   <div className="flex items-center gap-2 mb-2 flex-wrap">
-                    <span className={`tag ${c.tag}`}>{c.level}</span>
+                    <span className={`tag ${c.levelTag}`}>{c.level}</span>
                     <span className="tag tag-new">{c.cat}</span>
                   </div>
-                  <h3 className="font-bold text-slate-800 text-base mb-2 leading-snug group-hover:text-purple-300 transition-colors">{c.title}</h3>
+                  <h3 className="font-bold text-slate-800 text-base mb-2 leading-snug group-hover:text-orange-500 transition-colors">
+                    {c.title}
+                  </h3>
                   <p className="text-gray-500 text-sm leading-relaxed mb-4 flex-1">{c.desc}</p>
 
                   <div className="flex items-center gap-4 text-xs text-gray-500 mb-3">
@@ -120,15 +133,15 @@ export default function CoursesPage() {
 
                   <div className="flex items-center justify-between pt-1">
                     <div>
-                      <span className="text-2xl font-black text-white">{fmt(c.price)}</span>
+                      <span className="text-2xl font-black gradient-text">{fmt(c.price)}</span>
                       <span className="text-xs ml-2 price-old">{fmt(c.oldPrice)}</span>
                     </div>
-                    <Link href="/login" className="btn-brand px-4 py-2 rounded-xl text-xs font-bold">
-                      <span className="relative z-10">Đăng ký học</span>
-                    </Link>
+                    <span className="btn-brand px-4 py-2 rounded-xl text-xs font-bold">
+                      <span className="relative z-10">Xem khóa học</span>
+                    </span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
